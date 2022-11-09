@@ -6,7 +6,7 @@ import { categories } from '../utils/constants';
 import { ImInsertTemplate } from 'react-icons/im';
 
 const Discover = () => {
-    const activeCategoryStyle = `xl:border-2 hover:bg-primary xl:border-[#f51997] px-3 py-2 rounded xl:rounded-full flex items-center gap-2 justify-center cursor-pointer text-[#FF1997]`;
+    const activeCategoryStyle = `xl:border-2 hover:bg-primary xl:border-red-500 px-3 py-2 rounded xl:rounded-full flex items-center gap-2 justify-center cursor-pointer text-[#FF1997]`;
     const categoryStyle = `xl:border-2 hover:bg-primary xl:border-gray-300 px-3 py-2 rounded xl:rounded-full flex items-center gap-2 justify-center cursor-pointer text-black`;
 
     const router = useRouter();

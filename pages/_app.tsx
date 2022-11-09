@@ -3,9 +3,12 @@ import type { AppProps } from 'next/app';
 import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import useThemeStore from '../store/themeStore';
 
 const App = ({ Component, pageProps }: AppProps) => {
     const [isSSR, setIsSSR] = useState(true);
+    const { darkMode } = useThemeStore();
 
     useEffect(() => {
         setIsSSR(false);
@@ -14,17 +17,25 @@ const App = ({ Component, pageProps }: AppProps) => {
     if (isSSR) return null;
 
     return (
-        <div>
-            <Navbar />
-            <div className='flex gap-6 md:gap-20'>
-                <div className='h-[92vh] overflow-hidden xl:hover:overflow-auto'>
-                    <Sidebar />
-                </div>
-                <div className='mt-4 flex flex-col gap-10 overflow-auto h-[88vh] videos flex-1'>
-                    <Component {...pageProps} />
+        <GoogleOAuthProvider
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN || ``}
+        >
+            <div
+                className={`${
+                    darkMode && `dark`
+                } flex flex-col items-center w-full`}
+            >
+                <Navbar />
+                <div className='flex'>
+                    <div className='h-[92vh] overflow-hidden xl:hover:overflow-auto'>
+                        <Sidebar />
+                    </div>
+                    <div className='lg:mx-6 lg:px-6 mt-6 flex flex-col gap-10 overflow-auto h-[88vh] videos flex-1 items-center'>
+                        <Component {...pageProps} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </GoogleOAuthProvider>
     );
 };
 

@@ -1,11 +1,38 @@
 import type { NextPage } from 'next';
+import axios from 'axios';
+import { VideoPost } from '../types';
+import VideoCard from '../components/VideoCard';
+import NoResults from '../components/NoResults';
 
-const Home: NextPage = () => {
+interface Props {
+    videos: VideoPost[];
+}
+
+const Home: NextPage<Props> = ({ videos }) => {
     return (
-        <div>
-            <h1 className='text-3xl font-bold underline'>Hello World</h1>
+        <div className='flex flex-col gap-10 videos h-full'>
+            {videos.length ? (
+                videos.map((video) => (
+                    <VideoCard
+                        post={video}
+                        key={video._id}
+                    />
+                ))
+            ) : (
+                <NoResults text={'No videos'} />
+            )}
         </div>
     );
+};
+
+export const getServerSideProps = async () => {
+    const { data } = await axios.get(`http://localhost:3000/api/post`);
+
+    return {
+        props: {
+            videos: data,
+        },
+    };
 };
 
 export default Home;
