@@ -12,6 +12,7 @@ interface Props {
 }
 
 const VideoCard: NextPage<Props> = ({ post }) => {
+    const [hover, setHover] = useState(false);
     const [playing, setPlaying] = useState(false);
     const [muted, setMuted] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -46,7 +47,7 @@ const VideoCard: NextPage<Props> = ({ post }) => {
             <div className='flex items-center justify-center'>
                 <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
                     <div className='lg:w-16 lg:h-16 w-10 h-10'>
-                        <Link href='/'>
+                        <Link href={`/profile/${post.postedBy._id}`}>
                             <>
                                 <Image
                                     width={62}
@@ -60,10 +61,13 @@ const VideoCard: NextPage<Props> = ({ post }) => {
                         </Link>
                     </div>
                     <div className='flex items-center justify-center'>
-                        <Link href='/'>
+                        <Link href={`/profile/${post.postedBy._id}`}>
                             <div className='flex items-center gap-2'>
-                                <p className='flex gap-2 items-center sm:text-xl font-bold text-primary'>
-                                    {`${post.postedBy.userName} `}
+                                <p className='flex gap-2 items-center sm:text-xl lowercase font-bold text-primary'>
+                                    {`${post.postedBy.userName.replaceAll(
+                                        ' ',
+                                        ''
+                                    )} `}
                                     <GoVerified className='text-blue-400 text-md' />
                                 </p>
                                 <p className='capitalize font-medium text-xs text-gray-500 hidden lg:block'>
@@ -75,17 +79,20 @@ const VideoCard: NextPage<Props> = ({ post }) => {
                 </div>
             </div>
             <div className='flex gap-4'>
-                <div className='rounded-3xl relative'>
+                <div
+                    className='rounded-3xl relative'
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                >
                     <Link href={`/detail/${post._id}`}>
                         <video
                             ref={videoRef}
                             src={post.video.asset.url}
                             loop
                             className='w-[240px] h-[400px] lg:w-[300px] lg:h-[500px] rounded-2xl cursor-pointer bg-black object-cover'
-                            onClick={onVideoPress}
                         />
                     </Link>
-                    {
+                    {hover && (
                         <div className='absolute bottom-6 flex justify-between px-6 w-full'>
                             {playing ? (
                                 <button onClick={onVideoPress}>
@@ -106,7 +113,7 @@ const VideoCard: NextPage<Props> = ({ post }) => {
                                 </button>
                             )}
                         </div>
-                    }
+                    )}
                 </div>
             </div>
         </div>
