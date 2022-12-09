@@ -22,25 +22,23 @@ const Like = ({ handleLike, handleDislike, likes }: Props) => {
     }, [likes, filterLikes]);
 
     return (
-        <div className='gap-6'>
-            <div className='mt-4 flex flex-col justify-center items-center cursor-pointer'>
-                {alreadyLiked ? (
-                    <div
-                        className='bg-primary text-red-500 rounded-full p-2 md:p-4'
-                        onClick={handleDislike}
-                    >
-                        <MdFavorite className='text-lg md:text-2xl' />
-                    </div>
-                ) : (
-                    <div
-                        className='bg-primary rounded-full p-2 md:p-4'
-                        onClick={handleLike}
-                    >
-                        <MdFavorite className='text-lg md:text-2xl ' />
-                    </div>
-                )}
-                <p className='text-md font-semibold'>{likes?.length || 0}</p>
-            </div>
+        <div className='mt-4 flex flex-col justify-center items-center cursor-pointer'>
+            {alreadyLiked ? (
+                <div
+                    className='bg-primary text-red-500 rounded-full p-2 md:p-4'
+                    onClick={handleDislike}
+                >
+                    <MdFavorite className='text-lg md:text-2xl' />
+                </div>
+            ) : (
+                <div
+                    className='bg-primary rounded-full p-2 md:p-4'
+                    onClick={handleLike}
+                >
+                    <MdFavorite className='text-lg md:text-2xl ' />
+                </div>
+            )}
+            <p className='text-md font-semibold'>{likes?.length || 0}</p>
         </div>
     );
 };

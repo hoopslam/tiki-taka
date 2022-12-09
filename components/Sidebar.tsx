@@ -9,8 +9,6 @@ import SuggestedAccounts from './SuggestedAccounts';
 import Footer from './Footer';
 
 const Sidebar = () => {
-    const userProfile = false;
-
     const normalLink =
         'flex items-center gap-3 hover:bg-primary p-3 justfiy-center xl:justify-start cursor-pointer font-semibold text-red-500 rounded';
 
