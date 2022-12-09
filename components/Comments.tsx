@@ -1,19 +1,14 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { GoVerified } from 'react-icons/go';
 import useAuthStore from '../store/authStore';
 import NoResults from './NoResults';
 import { User } from '../types';
 import UserCard from './UserCard';
-import { v4 } from 'uuid';
 
 export enum CommentType {
     NO_COMMENT = 'No Comments Yet!',
     FIRST = 'Be the first to comment!',
     ADD_COMMENT = 'Add comment...',
 }
-
 interface Props {
     isPostingComment: Boolean;
     comment: string;
@@ -37,31 +32,12 @@ const Comments = ({
     comments,
 }: Props) => {
     const { userProfile } = useAuthStore();
-
     console.log(comments);
 
     return (
-        <div className='border-t-2 border-gray-200 pt-4 px-10 bg-[#f8f8f8] border-b-2 lg:pb-0 pb-[100px]'>
-            <div className='overflow-scroll h-auto min-h-[350px]'>
-                {comments.length ? (
-                    comments.map((comment) => (
-                        <div
-                            key={comment._key}
-                            className='flex'
-                        >
-                            <UserCard
-                                user={comment.postedBy}
-                                avatarSize={24}
-                            />
-                            <p>{comment.comment}</p>
-                        </div>
-                    ))
-                ) : (
-                    <NoResults text={CommentType.NO_COMMENT} />
-                )}
-            </div>
-            {userProfile && (
-                <div className='absolute bottom-0 left-0 pb-6 px-2 md:px-10'>
+        <div className='border-t-2 border-gray-200 pt-4 px-10 border-b-2 lg:pb-0 pb-[100px]'>
+            {userProfile ? (
+                <div className='pb-6'>
                     <form
                         onSubmit={addComment}
                         className='flex gap-4'
@@ -80,7 +56,29 @@ const Comments = ({
                         </button>
                     </form>
                 </div>
+            ) : (
+                <div>Please sign in to comment</div>
             )}
+            <div className='overflow-scroll max-h-[50vh] min-h-[350px] bg-[#f8f8f8] p-5 rounded-lg'>
+                {comments.length ? (
+                    comments.map((item) => (
+                        <div
+                            key={item._key}
+                            className='flex'
+                        >
+                            {item.postedBy && (
+                                <UserCard
+                                    user={item.postedBy}
+                                    key={item._key}
+                                />
+                            )}
+                            <p>{item.comment}</p>
+                        </div>
+                    ))
+                ) : (
+                    <NoResults text={CommentType.NO_COMMENT} />
+                )}
+            </div>
         </div>
     );
 };

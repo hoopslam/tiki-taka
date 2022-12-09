@@ -1,13 +1,13 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import axios from 'axios';
-import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
+import { User } from '../types';
 
 const authStore = (set: any) => ({
-    userProfile: null,
-    suggestedUsers: [],
+    userProfile: null as null | User,
+    suggestedUsers: [] as User[],
 
-    addUser: (user: any) => set({ userProfile: user }),
+    addUser: (user: User) => set({ userProfile: user }),
     removeUser: () => set({ userProfile: null }),
     fetchSuggestedUsers: async () => {
         const res = await axios.get(

@@ -78,7 +78,7 @@ const Detail = ({ postDetails }: Props) => {
         }
     };
 
-    const addComment = async (e) => {
+    const addComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (userProfile && comment) {
@@ -139,56 +139,50 @@ const Detail = ({ postDetails }: Props) => {
                 </div>
             </div>
             <div className='relative w-[100px] md:w-[900px] lg:w-[700px]'>
-                <div className='lg:mt-20  mt-10'>
-                    <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
-                        <div className='ml-4 lg:w-20 lg:h-20 w-16 h-16'>
-                            <Link href='/'>
-                                <>
-                                    <Image
-                                        width={62}
-                                        height={62}
-                                        src={post.postedBy.image}
-                                        alt='profile avatar'
-                                        layout='responsive'
-                                        className='rounded-full'
-                                    />
-                                </>
-                            </Link>
-                        </div>
-                        <div className='flex items-center justify-center'>
-                            <Link href='/'>
-                                <div className='flex flex-col gap-2'>
-                                    <p className='flex gap-2 items-center sm:text-xl font-bold text-primary'>
-                                        {`${post.postedBy.userName} `}
-                                        <GoVerified className='text-blue-400 text-md' />
-                                    </p>
-                                    <p className='capitalize font-medium text-xs text-gray-500 hidden lg:block'>
-                                        {post.postedBy.userName}
-                                    </p>
-                                </div>
-                            </Link>
-                        </div>
+                <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded mt-4'>
+                    <div className='ml-4 lg:w-20 lg:h-20 w-16 h-16'>
+                        <Link href='/'>
+                            <>
+                                <Image
+                                    width={62}
+                                    height={62}
+                                    src={post.postedBy.image}
+                                    alt='profile avatar'
+                                    layout='responsive'
+                                    className='rounded-full'
+                                />
+                            </>
+                        </Link>
                     </div>
-                    <p className='px-10 text-lg text-gray-600'>
-                        {post.caption}
-                    </p>
-                    <div className='mt-10 pt-10'>
-                        {userProfile && (
-                            <Like
-                                likes={post.likes}
-                                handleLike={() => handleLike(true)}
-                                handleDislike={() => handleLike(false)}
-                            />
-                        )}
+                    <div className='flex items-center justify-center'>
+                        <Link href='/'>
+                            <div className='flex flex-col gap-2'>
+                                <p className='flex gap-2 items-center sm:text-xl font-bold text-primary'>
+                                    {`${post.postedBy.userName} `}
+                                    <GoVerified className='text-blue-400 text-md' />
+                                </p>
+                                <p className='capitalize font-medium text-xs text-gray-500 hidden lg:block'>
+                                    {post.postedBy.userName}
+                                </p>
+                            </div>
+                        </Link>
                     </div>
-                    <Comments
-                        comment={comment}
-                        setComment={setComment}
-                        addComment={addComment}
-                        comments={post.comments}
-                        isPostingComment={isPostingComment}
-                    />
                 </div>
+                <p className='px-10 text-lg text-gray-600'>{post.caption}</p>
+                {userProfile && (
+                    <Like
+                        likes={post.likes}
+                        handleLike={() => handleLike(true)}
+                        handleDislike={() => handleLike(false)}
+                    />
+                )}
+                <Comments
+                    comment={comment}
+                    setComment={setComment}
+                    addComment={addComment}
+                    comments={post.comments}
+                    isPostingComment={isPostingComment}
+                />
             </div>
         </div>
     );

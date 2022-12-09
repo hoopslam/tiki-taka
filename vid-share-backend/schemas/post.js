@@ -44,8 +44,8 @@ export default {
             of: [{ type: 'comment' }],
         },
         {
-            name: 'topic',
-            title: 'Topic',
+            name: 'category',
+            title: 'Category',
             type: 'string',
         },
     ],

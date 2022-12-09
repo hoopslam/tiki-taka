@@ -12,6 +12,7 @@ export default async function handler(
         const query = postDetailQuery(id);
 
         const data = await client.fetch(query);
+        console.log(data[0].comments);
 
         res.status(200).json(data[0]);
     } else if (req.method === 'PUT') {
@@ -25,11 +26,16 @@ export default async function handler(
                 {
                     comment,
                     _key: v4(),
-                    postedBy: { _type: 'postedBy', _ref: userId },
+                    postedBy: {
+                        _type: 'postedBy',
+                        _ref: userId,
+                    },
                 },
             ])
             .commit();
+        const query = postDetailQuery(id);
+        const newData = await client.fetch(query);
 
-        res.status(200).json(data);
+        res.status(200).json(newData[0]);
     }
 }

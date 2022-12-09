@@ -29,8 +29,6 @@ const Search = ({ searchResults }: Props) => {
         ? 'border-b-2 border-black'
         : 'text-gray-400';
 
-    console.log(searchedAccounts);
-
     return (
         <div className='w-full '>
             <h2 className=''>{`Search results for "${search}"`}</h2>
@@ -53,7 +51,6 @@ const Search = ({ searchResults }: Props) => {
                     searchedAccounts.map((account) => (
                         <UserCard
                             user={account}
-                            avatarSize={24}
                             key={account._id}
                         />
                     ))
